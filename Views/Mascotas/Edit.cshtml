@@ -1,0 +1,30 @@
+﻿@model Veterinaria.Models.Mascota
+
+<h2>Editar Mascota</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label>Nombre</label>
+        <input asp-for="Nombre" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Especie</label>
+        <input asp-for="Especie" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Raza</label>
+        <input asp-for="Raza" class="form-control" />
+    </div>
+
+    <!-- Quita esta parte si no tienes 'Color' en el modelo -->
+    <!-- <div class="form-group">
+        <label>Color</label>
+        <input asp-for="Color" class="form-control" />
+    </div> -->
+
+    <button class="btn btn-warning mt-3">Actualizar</button>
+</form>

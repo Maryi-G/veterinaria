@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Veterinaria.Models.Mascota>
+
+<h2>Mascotas</h2>
+
+<a class="btn btn-primary" href="/Mascotas/Create">Crear nueva mascota</a>
+
+<table class="table table-striped mt-3">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Especie</th>
+            <th>Raza</th>
+            <!-- <th>Color</th> Quitar si no tienes Color -->
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Nombre</td>
+                <td>@item.Especie</td>
+                <td>@item.Raza</td>
+               
+
+                <td>
+                    <a class="btn btn-info" href="/Mascotas/Details/@item.Id">Detalles</a>
+                    <a class="btn btn-warning" href="/Mascotas/Edit/@item.Id">Editar</a>
+                    <a class="btn btn-danger" href="/Mascotas/Delete/@item.Id">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,28 @@
+﻿@model Veterinaria.Models.Mascota
+
+<h2>Registrar Mascota</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label>Nombre</label>
+        <input asp-for="Nombre" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Especie</label>
+        <input asp-for="Especie" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Raza</label>
+        <input asp-for="Raza" class="form-control" />
+    </div>
+
+    <!-- Elimina esta sección si no tienes la propiedad 'Color' en tu modelo -->
+    <!-- <div class="form-group">
+        <label>Color</label>
+        <input asp-for="Color" class="form-control" />
+    </div> -->
+
+    <button class="btn btn-success mt-3">Guardar</button>
+</form>

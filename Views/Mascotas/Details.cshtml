@@ -1,0 +1,14 @@
+﻿@model Veterinaria.Models.Mascota
+
+<h2>Detalles de Mascota</h2>
+
+<ul class="list-group">
+    <li class="list-group-item"><strong>Nombre:</strong> @Model.Nombre</li>
+    <li class="list-group-item"><strong>Especie:</strong> @Model.Especie</li>
+    <li class="list-group-item"><strong>Raza:</strong> @Model.Raza</li>
+
+    <!-- Elimina este si no tienes 'Color' -->
+    <!-- <li class="list-group-item"><strong>Color:</strong> @Model.Color</li> -->
+</ul>
+
+<a href="/Mascotas" class="btn btn-secondary mt-3">Volver</a>
