@@ -1,30 +1,28 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using veterinaria.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ---------------------------------------------------
-// 1️⃣ Cadena de conexión (usa tu nombre real de BD)
-// ---------------------------------------------------
+// 🔗 Cadena de conexión
 var connectionString = builder.Configuration.GetConnectionString("conexion");
 
-// ---------------------------------------------------
-// 2️⃣ Registrar el DbContext con MySQL
-// ---------------------------------------------------
+// 🗄️ DbContext
 builder.Services.AddDbContext<veterinariaContext>(options =>
     options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 33)))
 );
 
-// ---------------------------------------------------
-// 3️⃣ Agregar Soporte a MVC
-// ---------------------------------------------------
+// 🔐 IDENTITY (ESTO ES LO QUE FALTABA)
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<veterinariaContext>()
+    .AddDefaultTokenProviders();
+
+// MVC
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// ---------------------------------------------------
-// 4️⃣ Configuración del pipeline HTTP
-// ---------------------------------------------------
+// Pipeline
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -36,13 +34,13 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+// 🔐 AUTENTICACIÓN Y AUTORIZACIÓN (ORDEN IMPORTANTE)
+app.UseAuthentication();
 app.UseAuthorization();
 
-// ---------------------------------------------------
-// 5️⃣ Ruta por defecto (Mascotas/Index)
-// ---------------------------------------------------
+// 👉 Página inicial = Login
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Mascotas}/{action=Index}/{id?}");
+    pattern: "{controller=Account}/{action=Login}/{id?}");
 
 app.Run();

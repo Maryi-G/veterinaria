@@ -3,11 +3,18 @@
 <h2>Editar Mascota</h2>
 
 <form asp-action="Edit" method="post">
+
+    <!-- 🔴 ESTO ES OBLIGATORIO -->
     <input type="hidden" asp-for="Id" />
 
     <div class="form-group">
         <label>Nombre</label>
         <input asp-for="Nombre" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Edad</label>
+        <input asp-for="Edad" class="form-control" />
     </div>
 
     <div class="form-group">
@@ -20,11 +27,15 @@
         <input asp-for="Raza" class="form-control" />
     </div>
 
-    <!-- Quita esta parte si no tienes 'Color' en el modelo -->
-    <!-- <div class="form-group">
+    <div class="form-group">
+        <label>Género</label>
+        <input asp-for="Genero" class="form-control" />
+    </div>
+
+    <div class="form-group">
         <label>Color</label>
         <input asp-for="Color" class="form-control" />
-    </div> -->
+    </div>
 
-    <button class="btn btn-warning mt-3">Actualizar</button>
+    <button class="btn btn-success mt-3">Guardar cambios</button>
 </form>

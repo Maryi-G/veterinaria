@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using veterinaria.Data;
 using Veterinaria.Models;
 
 namespace veterinaria.Controllers
 {
+    [Authorize]
     public class MascotasController : Controller
     {
         private readonly veterinariaContext _context;
@@ -14,89 +16,66 @@ namespace veterinaria.Controllers
             _context = context;
         }
 
-        // GET: Mascotas
         public async Task<IActionResult> Index()
         {
-            var lista = await _context.Mascotas.ToListAsync();
-            return View(lista);
+            return View(await _context.Mascotas.ToListAsync());
         }
 
-        // GET: Mascotas/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            var mascota = await _context.Mascotas
-                .FirstOrDefaultAsync(m => m.Id == id);
-
-            if (mascota == null)
-                return NotFound();
-
+            var mascota = await _context.Mascotas.FirstOrDefaultAsync(m => m.Id == id);
+            if (mascota == null) return NotFound();
             return View(mascota);
         }
 
-        // GET: Mascotas/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Mascotas/Create
         [HttpPost]
         public async Task<IActionResult> Create(Mascota mascota)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Mascotas.Add(mascota);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(mascota);
+            if (!ModelState.IsValid)
+                return View(mascota);
+
+            _context.Mascotas.Add(mascota);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
-        // GET: Mascotas/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
             var mascota = await _context.Mascotas.FindAsync(id);
-            if (mascota == null)
-                return NotFound();
-
+            if (mascota == null) return NotFound();
             return View(mascota);
         }
 
-        // POST: Mascotas/Edit
         [HttpPost]
         public async Task<IActionResult> Edit(int id, Mascota mascota)
         {
-            if (id != mascota.Id)
-                return NotFound();
+            if (id != mascota.Id) return NotFound();
 
-            if (ModelState.IsValid)
-            {
-                _context.Update(mascota);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
+            if (!ModelState.IsValid)
+                return View(mascota);
 
-            return View(mascota);
+            _context.Update(mascota);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
-        // GET: Mascotas/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
             var mascota = await _context.Mascotas.FindAsync(id);
-            if (mascota == null)
-                return NotFound();
-
+            if (mascota == null) return NotFound();
             return View(mascota);
         }
 
-        // POST: Mascotas/Delete
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var mascota = await _context.Mascotas.FindAsync(id);
-
-            if (mascota == null)
-                return NotFound();
+            if (mascota == null) return NotFound();
 
             _context.Mascotas.Remove(mascota);
             await _context.SaveChangesAsync();
