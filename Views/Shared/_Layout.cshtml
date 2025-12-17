@@ -19,46 +19,40 @@
                 🐾 Veterinaria Aisha :)
             </a>
 
-            <a class="navbar-brand" asp-controller="Home" asp-action="Index">
-                🐾 Cerrar Sesión
-            </a>
+            <ul class="navbar-nav ms-auto">
 
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav ms-auto">
+                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Mascotas" asp-action="Index">
+                            Mascotas
+                        </a>
+                    </li>
 
-                    @if (User.Identity != null && User.Identity.IsAuthenticated)
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Mascotas" asp-action="Index">
-                                Mascotas
-                            </a>
-                        </li>
+                    <li class="nav-item">
+                        <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                            <button type="submit" class="nav-link btn btn-link text-white p-0">
+                                Cerrar sesión
+                            </button>
+                        </form>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Account" asp-action="Login">
+                            Login
+                        </a>
+                    </li>
 
-                        <li class="nav-item ms-2">
-                            <form asp-controller="Account" asp-action="Logout" method="post">
-                                <button type="submit" class="btn btn-danger btn-sm">
-                                    Cerrar sesión
-                                </button>
-                            </form>
-                        </li>
-                    }
-                    else
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Account" asp-action="Login">
-                                Login
-                            </a>
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Account" asp-action="Register">
+                            Registro
+                        </a>
+                    </li>
+                }
 
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Account" asp-action="Register">
-                                Registro
-                            </a>
-                        </li>
-                    }
-
-                </ul>
-            </div>
+            </ul>
         </div>
     </nav>
 

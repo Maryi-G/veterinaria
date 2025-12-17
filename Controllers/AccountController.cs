@@ -67,5 +67,10 @@ namespace veterinaria.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Login");
         }
+        //404
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
     }
 }
