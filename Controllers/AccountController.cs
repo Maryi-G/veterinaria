@@ -1,22 +1,22 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using veterinaria.Data;
 
 namespace veterinaria.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
         public AccountController(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
         }
 
-        // LOGIN
         public IActionResult Login()
         {
             return View();
@@ -29,15 +29,12 @@ namespace veterinaria.Controllers
                 email, password, false, false);
 
             if (result.Succeeded)
-            {
                 return RedirectToAction("Index", "Mascotas");
-            }
 
             ViewBag.Error = "Credenciales incorrectas";
             return View();
         }
 
-        // REGISTRO
         public IActionResult Register()
         {
             return View();
@@ -46,7 +43,7 @@ namespace veterinaria.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(string email, string password)
         {
-            var user = new IdentityUser
+            var user = new ApplicationUser
             {
                 UserName = email,
                 Email = email
@@ -56,15 +53,15 @@ namespace veterinaria.Controllers
 
             if (result.Succeeded)
             {
-                await _signInManager.SignInAsync(user, false);
-                return RedirectToAction("Index", "Mascotas");
+                return RedirectToAction("Login");
             }
 
             ViewBag.Error = string.Join(" | ", result.Errors.Select(e => e.Description));
             return View();
         }
 
-        // LOGOUT
+        //  LOGOUT 
+        [HttpPost]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();

@@ -1,30 +1,32 @@
-﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Veterinaria</title>
 
+    <!-- BOOTSTRAP -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
-<body>
+<body class="bg-light">
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
 
             <a class="navbar-brand" asp-controller="Home" asp-action="Index">
-                Veterinaria
+                🐾 Veterinaria Aisha :)
+            </a>
+
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                🐾 Cerrar Sesión
             </a>
 
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
 
-                    @* 🔐 USUARIO LOGUEADO *@
-                    @if (SignInManager.IsSignedIn(User))
+                    @if (User.Identity != null && User.Identity.IsAuthenticated)
                     {
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Mascotas" asp-action="Index">
@@ -32,15 +34,16 @@
                             </a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Account" asp-action="Logout">
-                                Cerrar sesión
-                            </a>
+                        <li class="nav-item ms-2">
+                            <form asp-controller="Account" asp-action="Logout" method="post">
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    Cerrar sesión
+                                </button>
+                            </form>
                         </li>
                     }
                     else
                     {
-                        @* 🚪 USUARIO NO LOGUEADO *@
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Account" asp-action="Login">
                                 Login
@@ -59,10 +62,12 @@
         </div>
     </nav>
 
-    <div class="container mt-4">
+    <!-- CONTENIDO -->
+    <main class="container mt-5">
         @RenderBody()
-    </div>
+    </main>
 
+    <!-- SCRIPTS -->
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     @RenderSection("Scripts", required: false)
 
